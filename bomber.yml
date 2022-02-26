@@ -10,21 +10,22 @@
     - security_update
   tasks:  
 
-    # - name: add an apt signing key
-    #   apt_key:
-    #     url: https://download.docker.com/linux/ubuntu/gpg
-    #     state: present
+    - name: add an apt signing key
+      apt_key:
+        url: https://download.docker.com/linux/ubuntu/gpg
+        state: present
 
     - name: add docker-ce repo
       apt_repository:
         repo: deb https://download.docker.com/linux/ubuntu bionic stable
         state: present
+        update_cache: true
 
     - name: install docker
       apt:
         name: "{{ item }}"
         state: present
-        update_cache: yes
+        update_cache: true
       loop:
         - apt-transport-https 
         - ca-certificates 
