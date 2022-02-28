@@ -42,4 +42,4 @@
         mode: '0744'
     
     - name: execute script
-      shell: ddos.sh
+      shell: ./ddos.sh
