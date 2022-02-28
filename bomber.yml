@@ -2,13 +2,13 @@
 - name: Create droplet and establish communication
   hosts: localhost ansible_connection=local
   roles:
-    - do_create_droplet    
+    - do_create_droplet
 
 - hosts: do
   remote_user: root
   roles:
     - security_update
-  tasks:  
+  tasks:
 
     - name: add an apt signing key
       apt_key:
@@ -27,19 +27,21 @@
         state: present
         update_cache: true
       loop:
-        - apt-transport-https 
-        - ca-certificates 
-        - curl 
+        - apt-transport-https
+        - ca-certificates
+        - curl
         - software-properties-common
         - containerd.io
         - docker-ce-cli
-        - docker-ce 
+        - docker-ce
 
-    - name: copy script 
+    - name: copy script
       copy:
         src: ddos.sh
         dest: ~/ddos.sh
         mode: '0744'
-    
+
     - name: execute script
       shell: ./ddos.sh
+      async: 2592000
+      poll: 0
